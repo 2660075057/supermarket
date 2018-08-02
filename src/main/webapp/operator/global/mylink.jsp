@@ -20,6 +20,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/operator/assets/base.js" ></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/operator/page/pagination.js" ></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/operator/layui/css/layui.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/operator/layui/layui.js" ></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/operator/layui/layui.all.js" ></script>
 
 	

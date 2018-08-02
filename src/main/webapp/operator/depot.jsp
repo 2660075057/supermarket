@@ -39,21 +39,13 @@
                         <label>
                             <input data-id="1" data-text="只看有库存" type="checkbox" class="icheck" id="denum" value="1"/> <span class="text">只看有库存的</span>
                         </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                        <select id="Typename" class="selectpicker margin-right-5">
-							<option value="1">商品条码</option>
-							<option value="2">商品名称</option>
-						</select>
-					<select id="ziTypename" class="selectpicker margin-right-5">
-							<option value="-1">请选择</option>
-						</select>
-                        
                         <select id="shop" class="selectpicker margin-right-5" style="width: 100px">
 
                         </select>
                         <select id="queryType" class="selectpicker margin-right-5">
                             <option value="1">商品条码</option>
                             <option value="2">商品名称</option>
+                            <option value="3">商品类型</option>
                         </select>
                         <input type="text" id="queryVal" class="form-control bar-form-control margin-right-5" placeholder="请输入检索值" />
                         <button type="button" class="btn btn-primary margin-right-5" id="query">查询</button>
@@ -343,15 +335,11 @@
 
 <script type="text/javascript">
     $(function() {
-    	selecttype();
         var param={};
         setpage(param);
         layui.use('layer', function(){
             var layer = layui.layer;
         });
-        
-       
-        
         $.ajax({
             url: "../operator/shop/shopList",
             type: "POST",
@@ -407,35 +395,6 @@
             }
         });
     });
-    
-    $("#Typename").change(function(){
-    	var typeid=$("#Typename").val();
-    	$("#ziTypename").html("");
-    	if (typeid!="-1") {
-    		$.ajax({
-        		url:"${ctx}/operator/commodity/ziselectType",
-        		type:"POST",
-        		data:{"typeid":typeid},
-        		success:function(data){
-        			if (data!="") {
-        				var rows = jQuery.parseJSON(data);
-            			$("#ziTypename").append("<option value='-1'>请选择</option>");
-            			for(var i=0;i<rows.length;i++){
-            				var comm = rows[i];
-            				var $option="<option value="+comm.typeId+">"+comm.typeName+"</option>";
-            				$("#ziTypename").append($option);
-            			}
-            			$("#ziTypename").selectpicker('refresh');
-            			$("#ziTypename").selectpicker('render');
-					}
-        			
-        			
-        		}
-        	})
-		}
-    	
-    })
-    
     $("#query").click(function(){
         var denum = -1;
         $('#denum:checked').each(function(){
@@ -444,24 +403,17 @@
         var queryType = $('#queryType').val();
         var queryVal = $('#queryVal').val();
         var shopId = $("#shop").val();
-        var typeId = $('#Typename').val();
-        var masterId = $('#ziTypename').val();
         var param={};
         if(shopId != -1){
             param["shop_id_str"]=shopId;
         }
-        if (typeId!="-1") {
-        	if (masterId!="-1") {
-            	param.typeId = masterId;
-    		}else{
-    			param.typeId = typeId;
-    		}
-		}
         if(queryVal !=null && queryVal.length >0){
             if(queryType == 1){
                 param["barcode"]=queryVal.replace(/(^\s*)|(\s*$)/g, "");
             }else if(queryType == 2){
                 param["commName"]=queryVal.replace(/(^\s*)|(\s*$)/g, "");
+            }else if(queryType == 3){
+                param["typeName"]=queryVal.replace(/(^\s*)|(\s*$)/g, "");
             }
         }
         if(denum != -1){
@@ -581,26 +533,6 @@
         });
     });
     
-    function selecttype(){
-    	$.ajax({
-    		url:"${ctx}/operator/commodity/selectType",
-    		type:"POST",
-    		success:function(data){
-    			$("#Typename").html("");
-    			var rows = jQuery.parseJSON(data);
-    			$("#Typename").append("<option value='-1'>请选择</option>");
-    			for(var i=0;i<rows.length;i++){
-    				var comm = rows[i];
-    				var $option="<option value="+comm.typeId+">"+comm.typeName+"</option>";
-    				$("#Typename").append($option);
-    			}
-    			$("#Typename").selectpicker('refresh');
-    			$("#Typename").selectpicker('render');
-    		}
-    	})
-    }
-    
-    
     function updateDepot(param,id,url) {
         $.ajax({
             url: "../operator/depot"+url,
@@ -691,19 +623,10 @@
         var queryType = $('#queryType').val();
         var queryVal = $('#queryVal').val();
         var shopId = $("#shop").val();
-        var typeId = $('#Typename').val();
-        var masterId = $('#ziTypename').val();
         var param={};
         if(shopId != -1){
             param["shop_id_str"]=shopId;
         }
-        if (typeId!="-1") {
-        	if (masterId!="-1") {
-            	param.typeId = masterId;
-    		}else{
-    			param.typeId = typeId;
-    		}
-		}
         if(queryVal !=null && queryVal.length >0){
             if(queryType == 1){
                 param["barcode"]=queryVal.replace(/(^\s*)|(\s*$)/g, "");
