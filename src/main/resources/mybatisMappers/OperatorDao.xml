@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.OperatorDao">
+    <cache readOnly="false" eviction="LRU" flushInterval="60000"/>
+
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.OperatorEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="oper_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="oper_account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="oper_pwd" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="oper_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="open_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="maintenance_card" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        oper_id, oper_account, oper_pwd, oper_name, sex, phone, group_id, state,open_id,maintenance_card,create_time
+    </sql>
+    <sql id="base_where_param">
+        <if test="operAccount != null">
+            oper_account = #{operAccount}
+        </if>
+        <if test="phone != null">
+            and phone = #{phone}
+        </if>
+        <if test="groupId != null">
+            and group_id = #{groupId}
+        </if>
+        <if test="state != null">
+            and state = #{state}
+        </if>
+        <if test="!deleteMark">
+            and state != 2
+        </if>
+        <if test="openId != null">
+            and open_id = #{openId}
+        </if>
+        <if test="ignoreId != null">
+            <!--范围查询条件-->
+            and oper_id not in
+            <foreach collection="ignoreId" open="(" close=")" separator=","
+                     item="ignore">
+                #{ignore}
+            </foreach>
+        </if>
+        <if test="operName != null">
+            and oper_name = #{operName}
+        </if>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.OperatorEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from operator
+        where oper_id = #{operId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.OperatorParam"
+            resultType="com.grape.supermarket.entity.db.OperatorEntity" >
+        select
+        <include refid="Base_Column_List"/>
+        from operator
+        <where>
+            <include refid="base_where_param" />
+        </where>
+        <if test="select != null">
+            <if test="select.orderBy">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit #{select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.OperatorParam"
+            resultType="java.lang.Integer">
+        select
+          count(oper_id)
+        from operator
+        <where>
+            <include refid="base_where_param" />
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from operator
+        where oper_id = #{operId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective"
+            useGeneratedKeys="true" keyProperty="operId"
+            parameterType="com.grape.supermarket.entity.db.OperatorEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into operator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operId != null">
+                oper_id,
+            </if>
+            <if test="operAccount != null">
+                oper_account,
+            </if>
+            <if test="operPwd != null">
+                oper_pwd,
+            </if>
+            <if test="operName != null">
+                oper_name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="maintenanceCard != null">
+                maintenance_card,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operId != null">
+                #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="operAccount != null">
+                #{operAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="operPwd != null">
+                #{operPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="operName != null">
+                #{operName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="openId != null">
+                #{openId},
+            </if>
+            <if test="maintenanceCard != null">
+                #{maintenanceCard},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.OperatorEntity">
+        <!--
+        @mbggenerated
+        -->
+        update operator
+        <set>
+            <if test="operAccount != null">
+                oper_account = #{operAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="operPwd != null">
+                oper_pwd = #{operPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="operName != null">
+                oper_name = #{operName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="openId != null and openId != '' ">
+                open_id = #{openId},
+            </if>
+            <if test="openId == '' ">
+                open_id = null,
+            </if>
+            <if test="maintenanceCard != null">
+                maintenance_card = #{maintenanceCard},
+            </if>
+        </set>
+        where oper_id = #{operId,jdbcType=INTEGER}
+    </update>
+</mapper>

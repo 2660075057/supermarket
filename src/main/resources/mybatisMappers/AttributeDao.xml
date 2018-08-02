@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.AttributeDao">
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.AttributeEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="attr_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="attr_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        attr_id, attr_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from attribute
+        where attr_id = #{attrId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCommTypeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        SELECT
+          attribute.*
+        FROM
+          attribute
+        INNER JOIN commodity_type_attr AS cta ON cta.attr_id = attribute.attr_id
+        WHERE cta.type_id = #{typeId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from attribute
+        where attr_id = #{attrId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.AttributeEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into attribute (attr_id, attr_name)
+        values (#{attrId,jdbcType=INTEGER}, #{attrName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.AttributeEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into attribute
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attrId != null">
+                attr_id,
+            </if>
+            <if test="attrName != null">
+                attr_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attrId != null">
+                #{attrId,jdbcType=INTEGER},
+            </if>
+            <if test="attrName != null">
+                #{attrName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.AttributeEntity">
+        <!--
+        @mbggenerated
+        -->
+        update attribute
+        <set>
+            <if test="attrName != null">
+                attr_name = #{attrName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where attr_id = #{attrId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.AttributeEntity">
+        <!--
+        @mbggenerated
+        -->
+        update attribute
+        set attr_name = #{attrName,jdbcType=VARCHAR}
+        where attr_id = #{attrId,jdbcType=INTEGER}
+    </update>
+    <select id="selectAll" resultType="com.grape.supermarket.entity.db.AttributeEntity">
+        select
+        <include refid="Base_Column_List"/>
+         from attribute
+    </select>
+</mapper>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.BatchLogDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.BatchLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="operator_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="form_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="to_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    id, operator_id, form_id, to_id, amount, type, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from batch_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from batch_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.BatchLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into batch_log (id, operator_id, form_id, 
+      to_id, amount, type, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{operatorId,jdbcType=INTEGER}, #{formId,jdbcType=VARCHAR}, 
+      #{toId,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.BatchLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into batch_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="operatorId != null">
+        operator_id,
+      </if>
+      <if test="formId != null">
+        form_id,
+      </if>
+      <if test="toId != null">
+        to_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="formId != null">
+        #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="toId != null">
+        #{toId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.BatchLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    update batch_log
+    <set>
+      <if test="operatorId != null">
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="formId != null">
+        form_id = #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="toId != null">
+        to_id = #{toId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.BatchLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    update batch_log
+    set operator_id = #{operatorId,jdbcType=INTEGER},
+      form_id = #{formId,jdbcType=VARCHAR},
+      to_id = #{toId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

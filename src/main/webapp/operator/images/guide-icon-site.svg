@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <path id="a" d="M25 55h14l2 9H23z"/>
+        <path id="b" d="M0 0h65v56.997H0z"/>
+        <path id="c" d="M0 47.179h65v9.819H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(7 9)">
+        <use fill="#FFF" xlink:href="#a"/>
+        <path stroke="#465E75" stroke-width="2" d="M25.802 56l-1.555 7h15.506l-1.555-7H25.802z"/>
+        <path stroke="#465E75" stroke-linecap="square" stroke-width="2" d="M18.5 63h27"/>
+        <use fill="#FFF" xlink:href="#b"/>
+        <path stroke="#465E75" stroke-width="2" d="M1 1h63v54.997H1z"/>
+        <use fill="#FFF" xlink:href="#c"/>
+        <path stroke="#465E75" stroke-width="2" d="M1 48.179h63v7.819H1z"/>
+        <path fill="#DCDFE2" d="M6 6h52v37H6z"/>
+        <path fill="#F67F70" d="M32 35.61c.618 0 9.61-5.918 9.61-14.61a9.61 9.61 0 0 0-19.22 0c0 8.485 8.992 14.61 9.61 14.61z"/>
+        <circle cx="32" cy="21" r="5.663" fill="#FFF"/>
+        <path stroke="#465E75" d="M26 51.5h1v1h-1zM31.5 51.5h1v1h-1zM37 51.5h1v1h-1z"/>
+    </g>
+</svg>

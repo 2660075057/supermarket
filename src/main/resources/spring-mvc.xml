@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--短信提供服务-->
+    <bean class="com.grape.supermarket.operator.service.impl.YunPianMobileMessageServiceImpl" />
+    <!--微信消息处理服务-->
+    <bean class="com.grape.supermarket.wechat.service.impl.PtTemplateMessageHandleService" />
+
+    <context:property-placeholder location="classpath:config.properties,classpath:elecTagConf/elec.properties,classpath:wechat.properties"/>
+    <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <ref bean="stringHttpMessageConverter"/>
+            <ref bean="mappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+        <mvc:path-matching suffix-pattern="false"/>
+    </mvc:annotation-driven>
+    <bean id="mappingJackson2HttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>text/json;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg value="UTF-8" index="0"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--配置扫描包-->
+    <context:component-scan base-package="com.grape.supermarket"/>
+
+	<!-- 引入其他配置 -->
+	<import resource="spring-mybatis.xml"/>
+	<import resource="spring_task_config.xml"/>
+	<bean class="com.grape.supermarket.common.bean.BeanFactory"/>
+
+	<!-- 防止返回jsp页面时候被拦截 -->
+	<mvc:default-servlet-handler />
+	
+	<!-- 容器启动时调用方法 -->
+	<bean class="com.grape.supermarket.common.interceptor.InitSystem" />
+
+	<!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>10485760</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>10485760</value>
+        </property>
+    </bean>
+
+</beans>

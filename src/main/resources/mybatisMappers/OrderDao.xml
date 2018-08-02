@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.OrderDao">
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        order_id, coust_id, shop_id, payment, preferential, create_time, payment_id, payment_type,
+        external_id, state, delete_mark, gross_profit , version
+    </sql>
+    <select id="selectByPrimaryKey"
+            parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.OrderEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+          <include refid="Base_Column_List"/>
+        from `order`
+        where order_id = #{orderId,jdbcType=INTEGER}
+    </select>
+    <select id="countConsumption"
+            resultType="java.util.Map">
+        select
+        sum(`payment`) as payment,
+        sum(`preferential`) as preferential
+        from `order`
+        where state = 1
+        <if test="coustId != null">
+            and coust_id = #{coustId}
+        </if>
+        <if test="shopId != null">
+            and shop_id = #{shopId}
+        </if>
+    </select>
+    <select id="selectByPaymentId"
+            parameterType="java.lang.String"
+            resultType="com.grape.supermarket.entity.db.OrderEntity">
+        select
+          <include refid="Base_Column_List"/>
+        from `order`
+        where payment_id = #{paymentId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from `order`
+        where order_id = #{orderId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective"
+            useGeneratedKeys="true"
+            keyProperty="orderId"
+            parameterType="com.grape.supermarket.entity.db.OrderEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="coustId != null">
+                coust_id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="payment != null">
+                payment,
+            </if>
+            <if test="grossProfit != null">
+                gross_profit,
+            </if>
+            <if test="preferential != null">
+                preferential,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="paymentId != null">
+                payment_id,
+            </if>
+            <if test="paymentType != null">
+                payment_type,
+            </if>
+            <if test="externalId != null">
+                external_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="coustId != null">
+                #{coustId,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="payment != null">
+                #{payment,jdbcType=INTEGER},
+            </if>
+            <if test="grossProfit != null">
+                #{grossProfit,jdbcType=INTEGER},
+            </if>
+            <if test="preferential != null">
+                #{preferential,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="paymentId != null">
+                #{paymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType,jdbcType=TINYINT},
+            </if>
+            <if test="externalId != null">
+                #{externalId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.OrderEntity">
+        <!--
+        @mbggenerated
+        -->
+        update `order`
+        <set>
+            <if test="coustId != null">
+                coust_id = #{coustId,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="payment != null">
+                payment = #{payment,jdbcType=INTEGER},
+            </if>
+            <if test="grossProfit != null">
+                gross_profit = #{grossProfit,jdbcType=INTEGER},
+            </if>
+            <if test="preferential != null">
+                preferential = #{preferential,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="paymentId != null">
+                payment_id = #{paymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType,jdbcType=TINYINT},
+            </if>
+            <if test="externalId != null">
+                external_id = #{externalId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </set>
+        where order_id = #{orderId,jdbcType=INTEGER}
+    </update>
+    <select id="selectOrderByCoustId"
+            parameterType="com.grape.supermarket.entity.param.OrderParam"
+            resultType="com.grape.supermarket.entity.db.OrderEntity">
+        select
+        <include refid="Base_Column_List"/>
+         from `order` where coust_id = #{coustId,jdbcType=INTEGER}
+        <if test="model == 1">
+            and state = 1 and delete_mark=0
+        </if>
+         <if test="startTime != null">
+         	and create_time <![CDATA[ >= ]]> #{startTime,jdbcType=TIMESTAMP}
+         </if>
+         <if test="endTime != null">
+         	and create_time <![CDATA[ <= ]]> #{endTime,jdbcType=TIMESTAMP}
+         </if>
+         order by create_time
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countOrderByCoustId"
+            parameterType="java.lang.Integer"
+            resultType="java.lang.Integer">
+        select count(order_id)
+        from `order` where state = 1 and coust_id = #{coustId,jdbcType=INTEGER}
+    </select>
+    <select id="financeStatistics" resultType="com.grape.supermarket.entity.page.FinancePageEntity" parameterType="com.grape.supermarket.entity.page.FinancePageEntity">
+        select s.shop_id,s.shop_name,sum(o.payment) payments,sum(o.gross_profit) gross_profits,
+        <!-- 进店数去除 delete by huanghuang -->
+        <!-- (
+        select count(id) from `shop_log` where shop_id = s.shop_id
+        <if test="startTime != null and endTime != null">
+            and date(create_time) between #{startTime} and #{endTime}
+        </if>
+        ) store_num, -->
+        count(o.order_id) order_num
+        from `order` o,`shop` s
+        where o.shop_id = s.shop_id  and o.state=1
+        <if test="idRange != null">
+            and s.shop_id in
+            <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </if>
+        <if test="shopName != null">
+            and s.shop_name like '%${shopName}%'
+        </if>
+        <if test="startTime != null and endTime != null">
+            and date(o.create_time) between #{startTime} and #{endTime}
+        </if>
+        group by s.shop_id
+    </select>
+    
+    <select id="selectOrderByParam"
+            parameterType="com.grape.supermarket.entity.param.OrderParam"
+            resultType="com.grape.supermarket.entity.db.OrderEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+          <include refid="Base_Column_List"/>
+        from `order`
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+             <if test="startTime != null">
+	         	and create_time <![CDATA[ >= ]]> #{startTime,jdbcType=TIMESTAMP}
+	         </if>
+	         <if test="endTime != null">
+	         	and create_time <![CDATA[ <= ]]> #{endTime,jdbcType=TIMESTAMP}
+	         </if>
+	         <if test="state != null">
+               and state = #{state}
+            </if>
+        </where>
+        group by shop_id,coust_id,order_id
+        <if test="select != null">
+            <if test="select.orderBy != null">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit ${select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.OrderParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+          count(order_id)
+        from `order`
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+             <if test="startTime != null">
+	         	and create_time <![CDATA[ >= ]]> #{startTime,jdbcType=TIMESTAMP}
+	         </if>
+	         <if test="endTime != null">
+	         	and create_time <![CDATA[ <= ]]> #{endTime,jdbcType=TIMESTAMP}
+	         </if>
+	         <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <update id="atomicUpdate">
+        update `order`
+        <set>
+            <if test="param.coustId != null">
+                coust_id = #{param.coustId,jdbcType=INTEGER},
+            </if>
+            <if test="param.shopId != null">
+                shop_id = #{param.shopId,jdbcType=INTEGER},
+            </if>
+            <if test="param.payment != null">
+                payment = #{param.payment,jdbcType=INTEGER},
+            </if>
+            <if test="param.preferential != null">
+                preferential = #{param.preferential,jdbcType=INTEGER},
+            </if>
+            <if test="param.createTime != null">
+                create_time = #{param.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="param.paymentId != null">
+                payment_id = #{param.paymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="param.paymentType != null">
+                payment_type = #{param.paymentType,jdbcType=TINYINT},
+            </if>
+            <if test="param.externalId != null">
+                external_id = #{param.externalId,jdbcType=VARCHAR},
+            </if>
+            <if test="param.state != null">
+                state = #{param.state,jdbcType=TINYINT},
+            </if>
+            <if test="param.deleteMark != null">
+                delete_mark = #{param.deleteMark,jdbcType=TINYINT},
+            </if>
+            version = version + 1
+        </set>
+        where
+          order_id = #{param.orderId,jdbcType=INTEGER}
+        and version = #{version}
+    </update>
+</mapper>

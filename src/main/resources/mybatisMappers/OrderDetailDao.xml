@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.OrderDetailDao">
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.OrderDetailEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into order_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="payment != null">
+                payment,
+            </if>
+            <if test="grossProfit != null">
+                gross_profit,
+            </if>
+            <if test="preferential != null">
+                preferential,
+            </if>
+            <if test="elecId != null">
+                elec_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="payment != null">
+                #{payment,jdbcType=INTEGER},
+            </if>
+            <if test="grossProfit != null">
+                #{grossProfit,jdbcType=INTEGER},
+            </if>
+            <if test="preferential != null">
+                #{preferential,jdbcType=INTEGER},
+            </if>
+            <if test="elecId != null">
+                #{elecId}
+            </if>
+        </trim>
+    </insert>
+    <select id="selectOrderDetailByOrderId" resultType="com.grape.supermarket.entity.page.OrderDetailPageEntity"
+            parameterType="java.lang.Integer">
+       select od.order_id,od.comm_id,od.payment,od.gross_profit,od.preferential,od.elec_id,c.barcode,c.type_id,c.comm_name,c.comm_price,c.delete_mark
+        from order_detail od,commodity c
+         where od.comm_id = c.comm_id and od.order_id=#{orderId,jdbcType=INTEGER}
+    </select>
+
+    <select id="financeStatisticsDetail" resultType="com.grape.supermarket.entity.page.FinanceDetailPageEntity"
+            parameterType="com.grape.supermarket.entity.param.FinanceDetailParam">
+        select od.order_id,c.comm_id,c.barcode,c.comm_name,ct.type_id,ct.type_name,
+        sum(od.payment) payments,sum(od.gross_profit) gross_profits,sum(od.preferential) preferentials,
+        count(*) sell_num
+        from order_detail od,commodity c,commodity_type ct,`order` o
+        where od.comm_id=c.comm_id and c.type_id = ct.type_id
+        and od.order_id = o.order_id
+        and o.shop_id = #{shopId}
+        and o.state = 1 <!-- 统计已经付款的订单 -->
+        and o.create_time between #{startTime} and #{endTime}
+        <if test="typeId != null">
+            and ct.type_id = #{typeId}
+        </if>
+        <if test="typeIds != null">
+            and ct.type_id in (${typeIds})
+        </if>
+        <if test="commName != null">
+            and (c.comm_name like '%${commName}%' or c.barcode like '%${commName}%')
+        </if>
+        group by od.comm_id,o.order_id
+        <include refid="common.currency_tail"/>
+    </select>
+
+    <select id="countStatisticsDetail" resultType="java.lang.Integer"
+            parameterType="com.grape.supermarket.entity.param.FinanceDetailParam">
+        select count(*) from (
+        select od.order_id
+        from order_detail od,`order` o,commodity c,commodity_type ct
+        where od.comm_id=c.comm_id and c.type_id = ct.type_id
+        and od.order_id = o.order_id
+        and o.shop_id = #{shopId}
+        and o.state = 1 <!-- 统计已经付款的订单 -->
+        and o.create_time between #{startTime} and #{endTime}
+        <if test="typeId != null">
+            and ct.type_id = #{typeId}
+        </if>
+        <if test="typeIds != null">
+            and ct.type_id in (${typeIds})
+        </if>
+        <if test="commName != null">
+            and (c.comm_name like '%${commName}%' or c.barcode like '%${commName}%')
+        </if>
+        group by od.comm_id,o.order_id
+        ) fin
+    </select>
+    <select id="selectOrderDetailByOrderIdGroupComm"
+            resultType="com.grape.supermarket.entity.page.OrderDetailPageEntity" parameterType="java.lang.Integer">
+        select od.order_id,od.comm_id,od.payment,od.gross_profit,od.preferential,c.barcode,c.type_id,c.comm_name,c.comm_price,c.delete_mark,count(od.comm_id) comm_count
+        from order_detail od,commodity c
+        where od.comm_id = c.comm_id and od.order_id=#{orderId,jdbcType=INTEGER}
+        group by od.comm_id
+    </select>
+</mapper>

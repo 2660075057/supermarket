@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.MessageDao">
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    message_id,message_type, reply_id, shop_id, user_id, user_type, content, state, delete_mark, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.grape.supermarket.entity.db.MessageEntity">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from message
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="messageId" parameterType="com.grape.supermarket.entity.db.MessageEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        message_id,
+      </if>
+    <if test="messageType != null">
+        message_type,
+    </if>
+      <if test="replyId != null">
+        reply_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="deleteMark != null">
+        delete_mark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=INTEGER},
+    </if>
+        <if test="messageType != null">
+            #{messageType,jdbcType=INTEGER},
+        </if>
+      <if test="replyId != null">
+        #{replyId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteMark != null">
+        #{deleteMark,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.MessageEntity">
+    <!--
+    @mbggenerated
+    -->
+    update message
+    <set>
+      <if test="replyId != null">
+        reply_id = #{replyId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteMark != null">
+        delete_mark = #{deleteMark,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.MessageParam"
+            resultType="com.grape.supermarket.entity.db.MessageEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from message
+        <where>
+            <if test="deleteMark != null and boolUser==0">
+                delete_mark = 0
+            </if>
+            <if test="boolUser==1">
+               and delete_mark in (0,1)
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="shopId != null">
+                and shop_id = #{shopId}
+            </if>
+            <if test="userType != null">
+                and user_type = #{userType}
+            </if>
+            <if test="messageType != null">
+                and message_type = #{messageType}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="messageId != null">
+                and message_id = #{messageId}
+            </if>
+        </where>
+      ORDER  BY create_time desc
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.MessageParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+        count(message_id)
+        from message
+        <where>
+            <if test="deleteMark != null and boolUser==0">
+                delete_mark = 0
+            </if>
+            <if test="boolUser==1">
+                and delete_mark in (0,1)
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="shopId != null">
+                and shop_id = #{shopId}
+            </if>
+            <if test="userType != null">
+                and user_type = #{userType}
+            </if>
+            <if test="messageType != null">
+                and message_type = #{messageType}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+</mapper>

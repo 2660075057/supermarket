@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.OperatorLogDao">
+    <sql id="Base_Column_List">
+        id, oper_id, cilent_ip, cmd, data_id, `data`,create_time
+    </sql>
+    <select id="selectByPrimaryKey"
+            parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.OperatorLogEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from operator_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <sql id="Base_where_param">
+        <if test="operId != null">
+            oper_id = #{operId}
+        </if>
+        <if test="cmd != null">
+            and cmd = #{cmd}
+        </if>
+        <if test="start_date">
+            and create_time <![CDATA[ >= ]]> #{start_date}
+        </if>
+        <if test="end_date">
+            and create_time <![CDATA[ <= ]]> #{end_date}
+        </if>
+    </sql>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.OperatorLogParam"
+            resultType="com.grape.supermarket.entity.db.OperatorLogEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from operator_log
+        <where>
+            <include refid="Base_where_param"/>
+        </where>
+        <if test="select != null">
+            <if test="select.orderBy">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit #{select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.OperatorLogParam"
+            resultType="java.lang.Integer">
+        select
+            count(*)
+        from operator_log
+        <where>
+            <include refid="Base_where_param"/>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from operator_log
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert"
+            parameterType="com.grape.supermarket.entity.db.OperatorLogEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into operator_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="operId != null">
+                oper_id,
+            </if>
+            <if test="cilentIp != null">
+                cilent_ip,
+            </if>
+            <if test="cmd != null">
+                cmd,
+            </if>
+            <if test="dataId != null">
+                data_id,
+            </if>
+            <if test="createTime != null">
+                operation_time,
+            </if>
+            <if test="data != null">
+                `data`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="operId != null">
+                #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="cilentIp != null">
+                #{cilentIp,jdbcType=VARCHAR},
+            </if>
+            <if test="cmd != null">
+                #{cmd,jdbcType=VARCHAR},
+            </if>
+            <if test="dataId != null">
+                #{dataId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="data != null">
+                #{data,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.OperatorLogEntity">
+        update operator_log
+        <set>
+            <if test="operId != null">
+                oper_id = #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="cilentIp != null">
+                cilent_ip = #{cilentIp,jdbcType=VARCHAR},
+            </if>
+            <if test="cmd != null">
+                cmd = #{cmd,jdbcType=VARCHAR},
+            </if>
+            <if test="dataId != null">
+                data_id = #{dataId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                operation_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="data != null">
+                `data` = #{data,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

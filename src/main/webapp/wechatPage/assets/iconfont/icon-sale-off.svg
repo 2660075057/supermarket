@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <circle cx="40" cy="40" r="40" fill="#535376" opacity=".7"/>
+        <text fill="#FFF" font-family="PingFangSC-Medium, PingFang SC" font-size="18" font-weight="400">
+            <tspan x="22" y="47">无货</tspan>
+        </text>
+    </g>
+</svg>

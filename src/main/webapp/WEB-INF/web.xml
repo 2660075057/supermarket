@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>grape supermarket</display-name>
+    <welcome-file-list>
+        <welcome-file>operator/guide.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.gif</url-pattern>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.cab</url-pattern>
+        <url-pattern>*.properties</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>springMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!--解决字符乱码  -->
+    <filter>
+        <filter-name>characterFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!--PC端过滤器-->
+    <filter>
+        <filter-name>updateOperatorSessionFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>updateOperatorSessionFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>operatorPermissionFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>operatorPermissionFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>operatorFilter</filter-name>
+        <filter-class>com.grape.supermarket.filter.OperatorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>updateOperatorSessionFilter</filter-name>
+        <url-pattern>/operator/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>operatorFilter</filter-name>
+        <url-pattern>/operator/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>operatorPermissionFilter</filter-name>
+        <url-pattern>/operator/*</url-pattern>
+    </filter-mapping>
+
+    <!--微信端过滤器-->
+    <filter>
+        <filter-name>wechatFilter</filter-name>
+        <filter-class>com.grape.supermarket.filter.WechatFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>wechatFilter</filter-name>
+        <url-pattern>/wechat/*</url-pattern>
+    </filter-mapping>
+    
+    
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/permissionTag.tld</taglib-uri>
+            <taglib-location>/WEB-INF/permissionTag.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/permissionFun.tld</taglib-uri>
+            <taglib-location>/WEB-INF/permissionFun.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+</web-app>

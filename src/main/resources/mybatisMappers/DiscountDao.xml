@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.DiscountDao">
+    <cache readOnly="false" size="128" eviction="LRU" flushInterval="60000" />
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.DiscountEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="discount_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="comm_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="data" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        discount_id, group_id, discount_type, comm_id, type_id, `data`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from discount
+        where discount_id = #{discountId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.DiscountParam"
+            resultType="com.grape.supermarket.entity.db.DiscountEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+          <include refid="Base_Column_List"/>
+        from discount
+        <where>
+            <if test="groupId != null">
+                group_id = #{groupId}
+            </if>
+        </where>
+        <include refid="common.currency_tail" />
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from discount
+        where discount_id = #{discountId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.DiscountEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into discount
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="discountId != null">
+                discount_id,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="discountType != null">
+                discount_type,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="data != null">
+                `data`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="discountId != null">
+                #{discountId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="discountType != null">
+                #{discountType,jdbcType=INTEGER},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                #{data,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.DiscountEntity">
+        <!--
+        @mbggenerated
+        -->
+        update discount
+        <set>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="discountType != null">
+                discount_type = #{discountType,jdbcType=INTEGER},
+            </if>
+            <if test="commId != null">
+                comm_id = #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                data = #{data,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where discount_id = #{discountId,jdbcType=INTEGER}
+    </update>
+</mapper>

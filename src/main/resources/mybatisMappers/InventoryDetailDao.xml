@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.InventoryDetailDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.InventoryDetailEntity">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="detail_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="inventory_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="comm_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="befor" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="after" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="error" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sold" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    detail_id, inventory_id, comm_id, befor, after, error, sold
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from inventory_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from inventory_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.InventoryDetailEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into inventory_detail (detail_id, inventory_id, comm_id, 
+      befor, after, error, 
+      sold)
+    values (#{detailId,jdbcType=INTEGER}, #{inventoryId,jdbcType=INTEGER}, #{commId,jdbcType=INTEGER}, 
+      #{befor,jdbcType=INTEGER}, #{after,jdbcType=INTEGER}, #{error,jdbcType=INTEGER}, 
+      #{sold,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.InventoryDetailEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into inventory_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        detail_id,
+      </if>
+      <if test="inventoryId != null">
+        inventory_id,
+      </if>
+      <if test="commId != null">
+        comm_id,
+      </if>
+      <if test="befor != null">
+        befor,
+      </if>
+      <if test="after != null">
+        after,
+      </if>
+      <if test="error != null">
+        error,
+      </if>
+      <if test="sold != null">
+        sold,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        #{detailId,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryId != null">
+        #{inventoryId,jdbcType=INTEGER},
+      </if>
+      <if test="commId != null">
+        #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="befor != null">
+        #{befor,jdbcType=INTEGER},
+      </if>
+      <if test="after != null">
+        #{after,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null">
+        #{sold,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.InventoryDetailEntity">
+    <!--
+    @mbggenerated
+    -->
+    update inventory_detail
+    <set>
+      <if test="inventoryId != null">
+        inventory_id = #{inventoryId,jdbcType=INTEGER},
+      </if>
+      <if test="commId != null">
+        comm_id = #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="befor != null">
+        befor = #{befor,jdbcType=INTEGER},
+      </if>
+      <if test="after != null">
+        after = #{after,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        error = #{error,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null">
+        sold = #{sold,jdbcType=INTEGER},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.InventoryDetailEntity">
+    <!--
+    @mbggenerated
+    -->
+    update inventory_detail
+    set inventory_id = #{inventoryId,jdbcType=INTEGER},
+      comm_id = #{commId,jdbcType=INTEGER},
+      befor = #{befor,jdbcType=INTEGER},
+      after = #{after,jdbcType=INTEGER},
+      error = #{error,jdbcType=INTEGER},
+      sold = #{sold,jdbcType=INTEGER}
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.InventoryDetailParam"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from inventory_detail
+        <where>
+            <if test="inventoryId != null">
+                inventory_id = #{inventoryId}
+            </if>
+            <if test="typeId != null or commName != null or typeIds != null">
+                and comm_id in 
+                ( 
+	                select
+			        comm_id
+			        from commodity
+			        <where>
+				        <if test="typeId != null">
+			                type_id = #{typeId}
+			            </if>
+				        <if test="commName != null">
+			                and comm_name LIKE CONCAT(CONCAT('%', '${commName}'), '%')
+			            </if>
+                        <if test="typeIds != null">
+                            and type_id in (${typeIds})
+                        </if>
+			        </where>
+		        )
+            </if>
+        </where>
+    </select>
+</mapper>

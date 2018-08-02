@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.GroupDao">
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.GroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="group_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        group_id, group_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from `group`
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `group`
+        <where>
+            <if test="param != null">
+                <if test="param.groupId != null">
+                    id = #{param.groupId}
+                </if>
+            </if>
+        </where>
+        <if test="select != null and select.orderBy != null">
+            order by ${select.orderBy}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from `group`
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective"
+            useGeneratedKeys="true" keyProperty="groupId"
+            parameterType="com.grape.supermarket.entity.db.GroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into `group`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.GroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        update `group`
+        <set>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.GroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        update `group`
+        set group_name = #{groupName,jdbcType=VARCHAR}
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </update>
+    <select id="countGroup"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+        count(group_id)
+        from `group`
+    </select>
+</mapper>

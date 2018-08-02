@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.PermissionDao">
+    <cache size="64" readOnly="true" flushInterval="60000" eviction="LRU" />
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.PermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        id, code,name, url
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.PermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByParam"
+            resultType="com.grape.supermarket.entity.db.PermissionEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from permission
+        <where>
+            <if test="param != null">
+                <if test="param.id != null">
+                    id = #{param.id}
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="selectByGroupId"
+            parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.PermissionEntity">
+        SELECT
+            permission.*
+        FROM
+        permission
+        INNER JOIN group_permission ON group_permission.p_id = permission.id
+        where group_permission.group_id = #{groupId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from permission
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.PermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.PermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        update permission
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

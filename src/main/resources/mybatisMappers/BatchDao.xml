@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.BatchDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.BatchEntity">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="batch_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_num" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="comm_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="batch_price" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="amount" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="remain" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="version" javaType="java.lang.Short" jdbcType="SMALLINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    batch_id, order_num, comm_id, batch_price, amount, remain, create_time, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from batch
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from batch
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.BatchEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into batch (batch_id, order_num, comm_id, 
+      batch_price, amount, remain, 
+      create_time, version)
+    values (#{batchId,jdbcType=INTEGER}, #{orderNum,jdbcType=CHAR}, #{commId,jdbcType=INTEGER}, 
+      #{batchPrice,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{version,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.BatchEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into batch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        batch_id,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="commId != null">
+        comm_id,
+      </if>
+      <if test="batchPrice != null">
+        batch_price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="remain != null">
+        remain,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="batchId != null">
+        #{batchId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=CHAR},
+      </if>
+      <if test="commId != null">
+        #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="batchPrice != null">
+        #{batchPrice,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null">
+        #{remain,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.BatchEntity">
+    <!--
+    @mbggenerated
+    -->
+    update batch
+    <set>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=CHAR},
+      </if>
+      <if test="commId != null">
+        comm_id = #{commId,jdbcType=INTEGER},
+      </if>
+      <if test="batchPrice != null">
+        batch_price = #{batchPrice,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null">
+        remain = #{remain,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.BatchEntity">
+    <!--
+    @mbggenerated
+    -->
+    update batch
+    set order_num = #{orderNum,jdbcType=CHAR},
+      comm_id = #{commId,jdbcType=INTEGER},
+      batch_price = #{batchPrice,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      remain = #{remain,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=SMALLINT}
+    where batch_id = #{batchId,jdbcType=INTEGER}
+  </update>
+</mapper>

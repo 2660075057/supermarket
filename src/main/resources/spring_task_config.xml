@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task.xsd">
+    <task:annotation-driven scheduler="taskScheduler" />
+    <task:scheduled-tasks scheduler="taskScheduler">
+        <!--每隔1秒检查库存状态-->
+        <task:scheduled ref="taskComponent" method="checkDepot" fixed-delay="60000"/>
+        <!--每天检查过期电子标签-->
+        <task:scheduled ref="taskComponent" method="checkElec" fixed-delay="86400000"/>
+    </task:scheduled-tasks>
+</beans>

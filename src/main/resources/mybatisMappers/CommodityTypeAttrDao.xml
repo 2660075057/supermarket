@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.CommodityTypeAttrDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.CommodityTypeAttrKey">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="attr_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityTypeAttrKey">
+    <!--
+    @mbggenerated
+    -->
+    delete from commodity_type_attr
+    where type_id = #{typeId,jdbcType=INTEGER}
+      <if test="attrId != null">
+        and attr_id = #{attrId,jdbcType=INTEGER}
+      </if>
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.CommodityTypeAttrKey">
+    <!--
+    @mbggenerated
+    -->
+    insert into commodity_type_attr (type_id, attr_id)
+    values (#{typeId,jdbcType=INTEGER}, #{attrId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.CommodityTypeAttrKey">
+    <!--
+    @mbggenerated
+    -->
+    insert into commodity_type_attr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="attrId != null">
+        attr_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="attrId != null">
+        #{attrId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

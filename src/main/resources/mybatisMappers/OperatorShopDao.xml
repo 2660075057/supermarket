@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.OperatorShopDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.OperatorShopKey">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="oper_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="shop_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.grape.supermarket.entity.db.OperatorShopKey">
+    <!--
+    @mbggenerated
+    -->
+    delete from operator_shop
+    where oper_id = #{operId,jdbcType=INTEGER}
+      and shop_id = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.OperatorShopKey">
+    <!--
+    @mbggenerated
+    -->
+    insert into operator_shop (oper_id, shop_id)
+    values (#{operId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.OperatorShopKey">
+    <!--
+    @mbggenerated
+    -->
+    insert into operator_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operId != null">
+        oper_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operId != null">
+        #{operId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="operatorShopKeyList"
+            resultType="com.grape.supermarket.entity.db.OperatorShopKey"
+            parameterType="java.lang.Integer">
+        SELECT
+            oper_id,shop_id
+        FROM
+            operator_shop
+        WHERE
+            oper_id = #{operId}
+    </select>
+    <select id="getOperatorIdList"
+            resultType="com.grape.supermarket.entity.db.OperatorShopKey"
+            parameterType="java.lang.Integer">
+        SELECT
+            oper_id,shop_id
+        FROM
+            operator_shop
+        WHERE
+            shop_id = #{shopId}
+    </select>
+</mapper>

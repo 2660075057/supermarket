@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.WechatConfDao">
+    <sql id="Base_Column_List">
+        id, `type`,`data`
+    </sql>
+    <select id="selectByPrimaryKey"
+            parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.WechatConfEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_conf
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByType"
+            resultType="com.grape.supermarket.entity.db.WechatConfEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from wechat_conf
+        where `type` = #{type,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from wechat_conf
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.WechatConfEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into wechat_conf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="data != null">
+                `data`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                #{data,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.WechatConfEntity">
+        <!--
+        @mbggenerated
+        -->
+        update wechat_conf
+        <set>
+            <if test="type != null">
+                `type` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                `data` = #{data,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

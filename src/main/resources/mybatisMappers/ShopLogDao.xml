@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.ShopLogDao">
+
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.ShopLogEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="shop_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="coust_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        id, shop_id, coust_id, type, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from shop_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectLastcome"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        shop_log
+        <where>
+            <if test="coustId != null">
+                coust_id = #{coustId}
+            </if>
+            <if test="shopId != null">
+                and shop_id = #{shopId}
+            </if>
+        </where>
+        order by create_time desc limit 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from shop_log
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.ShopLogEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into shop_log (id, shop_id, coust_id,
+        type, create_time)
+        values (#{id,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{coustId,jdbcType=INTEGER},
+        #{type,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.ShopLogEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into shop_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="coustId != null">
+                coust_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="coustId != null">
+                #{coustId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.ShopLogEntity">
+        <!--
+        @mbggenerated
+        -->
+        update shop_log
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="coustId != null">
+                coust_id = #{coustId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.ShopLogEntity">
+        <!--
+        @mbggenerated
+        -->
+        update shop_log
+        set shop_id = #{shopId,jdbcType=INTEGER},
+        coust_id = #{coustId,jdbcType=INTEGER},
+        type = #{type,jdbcType=TINYINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectAllIntoShop" parameterType="com.grape.supermarket.entity.param.ShopLogParam" resultType="com.grape.supermarket.entity.page.ShopLogPageEntity">
+        select
+        s.shop_name,sl.create_time,sl.shop_id
+         from `shop_log` sl,`shop` s
+         where sl.shop_id=s.shop_id and
+         sl.coust_id = #{coustId,jdbcType=INTEGER}
+         <if test="startTime != null">
+         	and sl.create_time <![CDATA[ >= ]]> #{startTime,jdbcType=TIMESTAMP}
+         </if>
+         <if test="endTime != null">
+         	and sl.create_time <![CDATA[ <= ]]> #{endTime,jdbcType=TIMESTAMP}
+         </if>
+         order by sl.create_time
+        <include refid="common.currency_tail" />
+    </select>
+    <delete id="deleteByShopId" parameterType="java.lang.Integer">
+        delete from shop_log where shop_id = #{shopId}
+    </delete>
+</mapper>

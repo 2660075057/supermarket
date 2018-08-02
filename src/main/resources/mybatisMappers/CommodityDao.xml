@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.CommodityDao">
+    <cache readOnly="false" flushInterval="600000" size="512" eviction="SOFT"/>
+
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        comm_id, barcode, type_id, comm_name,cost_price, comm_price, delete_mark
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+        resultType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBarcode" parameterType="com.grape.supermarket.entity.db.CommodityEntity"
+            resultType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity
+        where barcode = #{barcode} and delete_mark=0
+        <if test="commId != null">
+            and comm_id != #{commId}
+        </if>
+    </select>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.CommodityParam"
+            resultType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+         <include refid="Base_Column_List"/>
+       <!--  c.comm_id, c.barcode, c.type_id, c.comm_name,c.cost_price, c.comm_price, c.delete_mark
+        from commodity as c inner join commodity_type as ct on c.type_id = ct.type_id -->
+         from commodity
+        <where>
+            <if test="deleteMark != null">
+                delete_mark = 0
+            </if>
+            <if test="barcode != null">
+                and barcode = '%${barcode}%'
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="commName != null">
+                and comm_name like '%${commName}%'
+            </if>
+        </where>
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.CommodityParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+        count(comm_id)
+        from commodity
+        <where>
+            <if test="deleteMark != null">
+                delete_mark = 0
+            </if>
+            <if test="barcode != null">
+                and barcode = #{barcode}
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId}
+            </if>
+            <if test="commName != null">
+                and comm_name like '${commName}%'
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from commodity
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity (comm_id, barcode, type_id,
+        comm_name,cost_price, comm_price, delete_mark
+        )
+        values (#{commId,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER},
+        #{commName,jdbcType=VARCHAR},#{costPrice,jdbcType=INTEGER}, #{commPrice,jdbcType=INTEGER}, #{deleteMark,jdbcType=TINYINT}
+        )
+    </insert>
+    <insert id="insertSelective"
+            useGeneratedKeys="true"
+            keyProperty="commId"
+            parameterType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="barcode != null">
+                barcode,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="commName != null">
+                comm_name,
+            </if>
+            <if test="costPrice != null">
+                cost_price,
+            </if>
+            <if test="commPrice != null">
+                comm_price,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commId != null">
+                #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="barcode != null">
+                #{barcode,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="commName != null">
+                #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="costPrice != null">
+                #{costPrice,jdbcType=INTEGER},
+            </if>
+            <if test="commPrice != null">
+                #{commPrice,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity
+        <set>
+            <if test="barcode != null">
+                barcode = #{barcode,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="commName != null">
+                comm_name = #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="costPrice != null">
+                cost_price = #{costPrice,jdbcType=INTEGER},
+            </if>
+            <if test="commPrice != null">
+                comm_price = #{commPrice,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </set>
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity
+        set barcode = #{barcode,jdbcType=VARCHAR},
+        type_id = #{typeId,jdbcType=INTEGER},
+        comm_name = #{commName,jdbcType=VARCHAR},
+        cost_price = #{costPrice,jdbcType=INTEGER},
+        comm_price = #{commPrice,jdbcType=INTEGER},
+        delete_mark = #{deleteMark,jdbcType=TINYINT}
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </update>
+    <select id="selectByEntity"
+            parameterType="com.grape.supermarket.entity.db.CommodityEntity"
+            resultType="com.grape.supermarket.entity.db.CommodityEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity
+        <where>
+            <if test="commId != null">
+                comm_id = #{commId}
+            </if>
+            <if test="barcode != null">
+                and barcode = #{barcode}
+            </if>
+        </where>
+    </select>
+    <select id="selectCommByWeChat" resultType="com.grape.supermarket.entity.db.CommodityEntity" parameterType="com.grape.supermarket.entity.param.CommodityParam">
+        select c.* from commodity c,depot d,commodity_type ct where c.comm_id = d.comm_id and ct.type_id = c.type_id
+            and d.state = 0 and c.delete_mark = 0
+        <if test="endPrice != null and startPrice != null">
+            and c.comm_price between #{startPrice}  and #{endPrice}
+        </if>
+        <if test="endPrice == null and startPrice != null">
+            and c.comm_price > #{startPrice}
+        </if>
+        <if test="shopId != null">
+            and d.shop_id = #{shopId}
+        </if>
+        <if test="typeId != null">
+            and ct.type_id = #{typeId}
+        </if>
+        <if test="commName != null">
+            and c.comm_name like '%${commName}%'
+        </if>
+         group by d.comm_id
+        <if test="priceSort != null">
+            order by c.comm_price ${priceSort}
+        </if>
+        <include refid="common.currency_tail"/>
+    </select>
+    
+    <select id="selectType" resultType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+    	select type_id,type_name,master_id,delete_mark FROM commodity_type where master_id=0
+    </select>
+    
+    <select id="ziselectType" resultType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+    	select type_id,type_name,master_id,delete_mark FROM commodity_type where master_id=#{typeId}
+    </select>
+</mapper>

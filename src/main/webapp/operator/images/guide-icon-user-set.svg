@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <path id="a" d="M0 14h21l13.5 13.5L34 68H0z"/>
+        <path id="b" d="M13.587 28.057h-2.052c-6.075 0-11 4.925-11 11v14.001h41.058V39.057c0-6.075-4.925-11-11-11h-2.18A9.974 9.974 0 0 1 21 31.345a9.974 9.974 0 0 1-7.413-3.288z"/>
+        <path id="c" d="M3.75.564h6.5a3 3 0 0 1 3 3v45L7 57 .75 48.564v-45a3 3 0 0 1 3-3z"/>
+        <path id="d" d="M3.75.564h6.5a3 3 0 0 1 3 3V9H.75V3.564a3 3 0 0 1 3-3z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(8 4)">
+            <use fill="#FFF" xlink:href="#a"/>
+            <path stroke="#495F74" stroke-width="2" d="M1 15v52h32.012l.483-39.09L20.585 15H1z"/>
+        </g>
+        <path fill="#F6C776" d="M12.75 25.335h15.295l9.832 9.833-.364 29.497H12.75z"/>
+        <path fill="#FFF" stroke="#465E75" stroke-width="2" d="M51.074 46.293c5.088 0 9-5.818 9-11 0-8.886-4-7.817-6-10.317-1.5 1-3.03 2.921-8.5 2.5-4 0-3.5 5.015-3.5 7.817 0 4.53 3.912 11 9 11z"/>
+        <g transform="translate(30 18.976)">
+            <use fill="#FFF" xlink:href="#b"/>
+            <path stroke="#465E75" stroke-width="2" d="M13.156 29.057h-1.62c-5.523 0-10 4.477-10 10v13.001h39.057V39.057c0-5.523-4.477-10-10-10h-1.75A10.969 10.969 0 0 1 21 32.345a10.969 10.969 0 0 1-7.844-3.288z"/>
+        </g>
+        <path fill="#6ECDB3" d="M42.51 53.037h-.533a6 6 0 0 0-6 6v8.735h30.174v-8.735a6 6 0 0 0-6-6h-.627c-2.41 1.79-5.343 2.84-8.507 2.84-3.164 0-6.097-1.05-8.506-2.84z"/>
+        <path stroke="#465E75" stroke-width="2" d="M42.074 34.976c-.666-1.666-1.333-2.666-2-3v-6c-.173-4.666 2.16-7 7-7h9c2.667.334 3.334 1.5 2 3.5 2.5 1 3.5 2 3.5 4v5.5c-1 1.334-1.5 2.334-1.5 3"/>
+        <g>
+            <g transform="translate(12 4)">
+                <use fill="#FFF" xlink:href="#c"/>
+                <path stroke="#475F74" stroke-width="2" d="M1.75 48.234L7 55.32l5.25-7.086V3.564a2 2 0 0 0-2-2h-6.5a2 2 0 0 0-2 2v44.67z"/>
+            </g>
+            <g transform="translate(12 4)">
+                <use fill="#F67F70" xlink:href="#d"/>
+                <path stroke="#465E75" stroke-width="2" d="M1.75 8h10.5V3.564a2 2 0 0 0-2-2h-6.5a2 2 0 0 0-2 2V8z"/>
+            </g>
+            <path stroke="#475F74" stroke-linecap="square" stroke-width="2" d="M19 14v42.5"/>
+            <path stroke="#465E75" stroke-linecap="square" stroke-width="2" d="M14 13h10"/>
+        </g>
+    </g>
+</svg>

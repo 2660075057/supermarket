@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.ElecTagDao">
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        elec_id, comm_id, `data`, state,sell_time,version,create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.ElecTagEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from elec_tag
+        where elec_id = #{elecId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByData" parameterType="java.lang.String"
+            resultType="com.grape.supermarket.entity.db.ElecTagEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from elec_tag
+        where `data` = #{data} limit 1
+    </select>
+    <select id="selectMaxSeq"
+            resultType="com.grape.supermarket.entity.db.ElecTagEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from elec_tag
+        where comm_id = #{commId} and `data` like '${data}'
+        order by elec_id desc
+        limit 1
+    </select>
+    <delete id="deleteTimeout"
+            parameterType="java.util.Date">
+        delete from elec_tag where state = 1 and sell_time <![CDATA[ <= ]]> #{date}
+    </delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from elec_tag
+        where elec_id = #{elecId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.ElecTagEntity"
+            useGeneratedKeys="true" keyProperty="elecId">
+        <!--
+        @mbggenerated
+        -->
+        insert into elec_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="elecId != null">
+                elec_id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="data != null">
+                data,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="sellTime != null">
+                sell_time,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="elecId != null">
+                #{elecId,jdbcType=INTEGER},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                #{data,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="sellTime != null">
+                #{sellTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.ElecTagEntity">
+        <!--
+        @mbggenerated
+        -->
+        update elec_tag
+        <set>
+            <if test="commId != null">
+                comm_id = #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="data != null">
+                data = #{data,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="sellTime != null">
+                sell_time = #{sellTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{createTime,jdbcType=TINYINT},
+            </if>
+        </set>
+        where elec_id = #{elecId,jdbcType=INTEGER}
+    </update>
+</mapper>

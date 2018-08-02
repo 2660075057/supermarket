@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.InventoryDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.InventoryEntity">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="inventory_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="befor" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="after" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="error" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sold" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="oper_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="shop_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="inventory_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    inventory_id, befor, after, error, sold, oper_id, shop_id, inventory_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from inventory
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.grape.supermarket.entity.db.InventoryEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into inventory (inventory_id, befor, after, 
+      error, sold, oper_id, 
+      shop_id, inventory_time, create_time
+      )
+    values (#{inventoryId,jdbcType=INTEGER}, #{befor,jdbcType=INTEGER}, #{after,jdbcType=INTEGER}, 
+      #{error,jdbcType=INTEGER}, #{sold,jdbcType=INTEGER}, #{operId,jdbcType=INTEGER}, 
+      #{shopId,jdbcType=INTEGER}, #{inventoryTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.InventoryEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inventoryId != null">
+        inventory_id,
+      </if>
+      <if test="befor != null">
+        befor,
+      </if>
+      <if test="after != null">
+        after,
+      </if>
+      <if test="error != null">
+        error,
+      </if>
+      <if test="sold != null">
+        sold,
+      </if>
+      <if test="operId != null">
+        oper_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="inventoryTime != null">
+        inventory_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inventoryId != null">
+        #{inventoryId,jdbcType=INTEGER},
+      </if>
+      <if test="befor != null">
+        #{befor,jdbcType=INTEGER},
+      </if>
+      <if test="after != null">
+        #{after,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null">
+        #{sold,jdbcType=INTEGER},
+      </if>
+      <if test="operId != null">
+        #{operId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryTime != null">
+        #{inventoryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.InventoryEntity">
+    <!--
+    @mbggenerated
+    -->
+    update inventory
+    <set>
+      <if test="befor != null">
+        befor = #{befor,jdbcType=INTEGER},
+      </if>
+      <if test="after != null">
+        after = #{after,jdbcType=INTEGER},
+      </if>
+      <if test="error != null">
+        error = #{error,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null">
+        sold = #{sold,jdbcType=INTEGER},
+      </if>
+      <if test="operId != null">
+        oper_id = #{operId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryTime != null">
+        inventory_time = #{inventoryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.InventoryEntity">
+    <!--
+    @mbggenerated
+    -->
+    update inventory
+    set befor = #{befor,jdbcType=INTEGER},
+      after = #{after,jdbcType=INTEGER},
+      error = #{error,jdbcType=INTEGER},
+      sold = #{sold,jdbcType=INTEGER},
+      oper_id = #{operId,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      inventory_time = #{inventoryTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where inventory_id = #{inventoryId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.InventoryParam"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from inventory
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.InventoryParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+        count(inventory_id)
+        from inventory
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

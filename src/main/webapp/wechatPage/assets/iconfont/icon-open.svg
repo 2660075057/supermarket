@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="202" height="202" viewBox="0 0 202 202">
+    <defs>
+        <circle id="b" cx="85" cy="85" r="85"/>
+        <filter id="a" width="124.1%" height="124.1%" x="-12.1%" y="-11.5%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="8" result="shadowSpreadOuter1"/>
+            <feOffset dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="4"/>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+        </filter>
+        <filter id="c" width="165.8%" height="165.8%" x="-32.9%" y="-32.9%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="11.518"/>
+        </filter>
+        <path id="e" d="M51.656 62.704c3.488 0 6.24 1.12 8.256 3.392 1.92 2.144 2.88 4.992 2.88 8.512 0 3.52-.96 6.336-2.88 8.48-2.016 2.24-4.768 3.36-8.256 3.36-3.52 0-6.272-1.152-8.256-3.392-1.92-2.176-2.848-4.992-2.848-8.448 0-3.488.928-6.304 2.848-8.48 1.984-2.304 4.736-3.424 8.256-3.424zm0 3.296c-2.368 0-4.192.8-5.504 2.4-1.248 1.536-1.856 3.584-1.856 6.208 0 2.592.608 4.64 1.856 6.176 1.28 1.568 3.136 2.368 5.504 2.368 2.368 0 4.192-.768 5.472-2.272 1.248-1.504 1.888-3.584 1.888-6.272s-.64-4.8-1.888-6.336C55.848 66.736 54.024 66 51.656 66zm14.656-2.848h9.472c5.504 0 8.288 2.336 8.288 7.008 0 4.704-2.784 7.072-8.352 7.072h-5.664V86h-3.744V63.152zm3.744 3.2v7.68h5.44c1.664 0 2.88-.32 3.648-.896.768-.608 1.152-1.6 1.152-2.976s-.416-2.336-1.184-2.912c-.768-.608-1.984-.896-3.616-.896h-5.44zm17.216-3.2h16.48v3.2H91.016v6.336h11.968v3.2H91.016V82.8h13.28V86H87.272V63.152zm20.544 0h3.744l11.296 16.48h.128v-16.48h3.776V86h-3.648l-11.424-16.704h-.128V86h-3.744V63.152z"/>
+        <filter id="d" width="116.2%" height="159%" x="-8.1%" y="-21.1%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+        </filter>
+        <text id="g" fill="#FFF" font-family="PingFangSC-Semibold, PingFang SC" font-size="18" font-weight="500">
+            <tspan x="49" y="111">我要开门</tspan>
+        </text>
+        <filter id="f" width="113.9%" height="140%" x="-6.9%" y="-16%" filterUnits="objectBoundingBox">
+            <feOffset dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(16 15)">
+        <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+        <use fill="#8D8AE5" xlink:href="#b"/>
+        <circle cx="85" cy="85" r="89" stroke="#FFF" stroke-opacity=".1" stroke-width="8"/>
+        <circle cx="85" cy="85" r="84.5" stroke="#FFF" stroke-opacity=".112"/>
+        <circle cx="85" cy="85" r="79.5" stroke="#8C4DEC"/>
+        <circle cx="86.5" cy="86.5" r="52.5" fill="#FFF" filter="url(#c)" opacity=".1" style="mix-blend-mode:soft-light"/>
+        <g>
+            <use fill="#000" filter="url(#d)" xlink:href="#e"/>
+            <use fill="#FFF" xlink:href="#e"/>
+        </g>
+        <g fill="#FFF">
+            <use filter="url(#f)" xlink:href="#g"/>
+            <use xlink:href="#g"/>
+        </g>
+    </g>
+</svg>

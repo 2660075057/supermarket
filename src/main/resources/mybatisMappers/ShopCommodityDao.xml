@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.ShopCommodityDao">
+
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    comm_id, shop_id, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.grape.supermarket.entity.db.ShopCommodityKey" resultType="com.grape.supermarket.entity.page.ShopCommodityPageEntity">
+    select sc.comm_id,sc.shop_id,sc.price,s.shop_name,c.comm_name,c.barcode,ct.type_name
+         from shop_commodity sc,shop s,commodity c,commodity_type ct
+         where sc.shop_id=s.shop_id and sc.comm_id=c.comm_id and c.type_id=ct.type_id and c.delete_mark=0
+          and sc.comm_id = #{commId}
+          and sc.shop_id = #{shopId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.grape.supermarket.entity.db.ShopCommodityKey">
+    <!--
+    @mbggenerated
+    -->
+    delete from shop_commodity
+    where comm_id = #{commId}
+      and shop_id = #{shopId}
+  </delete>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.ShopCommodityEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into shop_commodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commId != null">
+        comm_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commId != null">
+        #{commId},
+      </if>
+      <if test="shopId != null">
+        #{shopId},
+      </if>
+      <if test="price != null">
+        #{price},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.ShopCommodityEntity">
+    <!--
+    @mbggenerated
+    -->
+    update shop_commodity
+    <set>
+      <if test="price != null">
+        price = #{price},
+      </if>
+    </set>
+    where comm_id = #{commId}
+      and shop_id = #{shopId}
+  </update>
+    <select id="selectShopCommListParam" resultType="com.grape.supermarket.entity.page.ShopCommodityPageEntity"
+            parameterType="com.grape.supermarket.entity.param.ShopCommodityParam">
+        select sc.comm_id,sc.shop_id,sc.price,s.shop_name,c.comm_name,c.barcode,ct.type_name
+         from shop_commodity sc,shop s,commodity c,commodity_type ct
+         where sc.shop_id=s.shop_id and sc.comm_id=c.comm_id and c.type_id=ct.type_id
+        <if test="commodityDeleteMark">
+            and c.delete_mark=0
+        </if>
+        <if test="idRange != null">
+            and sc.shop_id in
+            <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </if>
+         <if test="shopId != null">
+            and sc.shop_id = #{shopId}
+         </if>
+        <if test="barcode != null">
+            and c.barcode like '%${barcode}%'
+        </if>
+        <if test="commName != null">
+           and c.comm_name like '%${commName}%'
+        </if>
+        <if test="typeName != null">
+            and ct.type_name = #{typeName}
+        </if>
+         order by s.shop_id,c.barcode
+        <include refid="common.currency_tail" />
+    </select>
+
+    <select id="countShopCommList" parameterType="com.grape.supermarket.entity.param.ShopCommodityParam" resultType="java.lang.Integer">
+        select count(sc.comm_id)
+        from shop_commodity sc,shop s,commodity c,commodity_type ct
+        where sc.shop_id=s.shop_id and sc.comm_id=c.comm_id and c.type_id=ct.type_id
+        <if test="commodityDeleteMark">
+            and c.delete_mark=0
+        </if>
+        <if test="idRange != null">
+            and sc.shop_id in
+            <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </if>
+        <if test="shopId != null">
+            and sc.shop_id = #{shopId}
+        </if>
+        <if test="barcode != null">
+            and c.barcode like '%${barcode}%'
+        </if>
+        <if test="commName != null">
+            and c.comm_name like '%${commName}%'
+        </if>
+        <if test="typeName != null">
+            and ct.type_name = #{typeName}
+        </if>
+    </select>
+     <select id="selectByCommId" parameterType="java.lang.Integer" resultType="com.grape.supermarket.entity.db.ShopCommodityEntity">
+	    select <include refid="Base_Column_List"/>
+	         from shop_commodity
+	         where comm_id = #{commId} limit 1
+	  </select>
+	  
+</mapper>

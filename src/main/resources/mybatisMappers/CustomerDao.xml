@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.CustomerDao">
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.CustomerEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="coust_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="openid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="coust_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="region_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="card" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        coust_id, openid, nickname, coust_name, sex, phone, password, region_code, create_time,card
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where coust_id = #{coustId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByOpenid"
+            parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where openid = #{openid}
+    </select>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.CustomerParam"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+          <include refid="Base_Column_List"/>
+        from customer
+        <where>
+            <if test="coustName != null">
+                coust_name = #{coustName}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="card != null">
+                and card = #{card}
+            </if>
+            <if test="openid != null">
+                and openid = #{openid}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="regionCode != null">
+                and region_code = #{regionCode}
+            </if>
+            <if test="queryCondition != null">
+                and phone LIKE CONCAT(CONCAT('%', #{queryCondition}), '%') or coust_name LIKE CONCAT(CONCAT('%', #{queryCondition}), '%')<!-- 用户名或者电话号码 -->
+            </if>
+        </where>
+        <if test="select != null">
+            <if test="select.orderBy != null">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit ${select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.CustomerParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+          count(coust_id)
+        from customer
+        <where>
+            <if test="coustName != null">
+                coust_name = #{coustName}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="card != null">
+                and card = #{card}
+            </if>
+            <if test="openid != null">
+                and openid = #{openid}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="regionCode != null">
+                and region_code = #{regionCode}
+            </if>
+            <if test="queryCondition != null">
+                and phone LIKE CONCAT(CONCAT('%', #{queryCondition}), '%') or coust_name LIKE CONCAT(CONCAT('%', #{queryCondition}), '%')<!-- 用户名或者电话号码 -->
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from customer
+        where coust_id = #{coustId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.CustomerEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into customer (coust_id, openid, nickname,
+        coust_name, sex, phone,
+        password, region_code, create_time,
+        card)
+        values (#{coustId,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+        #{coustName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{password,jdbcType=CHAR}, #{regionCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{card,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.CustomerEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coustId != null">
+                coust_id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="coustName != null">
+                coust_name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="regionCode != null">
+                region_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="card != null">
+                card,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coustId != null">
+                #{coustId,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="coustName != null">
+                #{coustName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=CHAR},
+            </if>
+            <if test="regionCode != null">
+                #{regionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="card != null">
+                #{card,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.CustomerEntity">
+        <!--
+        @mbggenerated
+        -->
+        update customer
+        <set>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="coustName != null">
+                coust_name = #{coustName,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=CHAR},
+            </if>
+            <if test="regionCode != null">
+                region_code = #{regionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="card != null">
+                card = #{card,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where coust_id = #{coustId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CustomerEntity">
+        <!--
+        @mbggenerated
+        -->
+        update customer
+        set openid = #{openid,jdbcType=VARCHAR},
+        nickname = #{nickname,jdbcType=VARCHAR},
+        coust_name = #{coustName,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        password = #{password,jdbcType=CHAR},
+        region_code = #{regionCode,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        card = #{card,jdbcType=VARCHAR}
+        where coust_id = #{coustId,jdbcType=INTEGER}
+    </update>
+</mapper>

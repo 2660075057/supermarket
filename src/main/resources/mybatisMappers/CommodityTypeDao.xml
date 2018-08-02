@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.CommodityTypeDao">
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        type_id, type_name, master_id, delete_mark
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity_type
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByMasterId" parameterType="java.lang.Integer" resultType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from commodity_type
+        where master_id = #{masterId,jdbcType=INTEGER} and delete_mark = 0
+    </select>
+    <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.CommodityTypeParam"
+            resultType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+          <include refid="Base_Column_List"/>
+        from commodity_type
+        <where>
+            <if test="typeName != null">
+                type_name like '%${typeName}%'
+            </if>
+            <if test="typeId != null">
+                and type_id = #{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="model == 1">
+                and delete_mark = 0
+            </if>
+        </where>
+        <include refid="common.currency_tail"/>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from commodity_type
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert"
+            useGeneratedKeys="true"
+            keyProperty="typeId"
+            parameterType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity_type (type_id, type_name, master_id,delete_mark
+        )
+        values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{masterId,jdbcType=INTEGER},#{deleteMark,jdbcType=TINYINT}
+        )
+    </insert>
+    <insert id="insertSelective"
+            useGeneratedKeys="true"
+            keyProperty="typeId"
+            parameterType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="masterId != null">
+                master_id,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="masterId != null">
+                #{masterId,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity_type
+        <set>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="masterId != null">
+                master_id = #{masterId,jdbcType=INTEGER},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=TINYINT},
+            </if>
+        </set>
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityTypeEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity_type
+        set type_name = #{typeName,jdbcType=VARCHAR},
+        master_id = #{masterId,jdbcType=INTEGER},
+        delete_mark = #{deleteMark,jdbcType=TINYINT}
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </update>
+    <select id="countByParam" parameterType="com.grape.supermarket.entity.param.CommodityTypeParam"
+            resultType="java.lang.Integer">
+        select
+          count(type_id)
+        from commodity_type
+        <where>
+            <if test="typeName != null">
+                type_name like '%${typeName}%'
+            </if>
+            <if test="model == 1">
+                and delete_mark = 0
+            </if>
+        </where>
+    </select>
+</mapper>

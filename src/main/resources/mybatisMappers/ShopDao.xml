@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.ShopDao">
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        shop_id, shop_name, info, longitude, latitude, address, region_code, state, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" 
+            resultType="com.grape.supermarket.entity.db.ShopEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from shop
+        where shop_id = #{shopId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByParam" parameterType="com.grape.supermarket.entity.param.ShopParam"
+            resultType="com.grape.supermarket.entity.db.ShopEntity">
+        select
+          <include refid="Base_Column_List"/>
+        from shop
+        <where>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="shopName != null">
+                shop_name like '%${shopName}%'
+            </if>
+            <if test="lonMin != null and lonMax != null and latMin != null and latMax != null">
+                and (longitude BETWEEN #{lonMin} AND #{lonMax})
+                and (latitude BETWEEN #{latMin} AND #{latMax})
+            </if>
+            <if test="regionCode != null">
+                and region_code like '${regionCode}%'
+            </if>
+        </where>
+        <if test="select != null">
+            <if test="select.orderBy">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit #{select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="countByParam" parameterType="com.grape.supermarket.entity.param.ShopParam"
+            resultType="java.lang.Integer">
+        select
+          count(shop_id)
+        from shop
+        <where>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="shopName != null">
+                shop_name like '%${shopName}%'
+            </if>
+            <if test="regionCode != null">
+                region_code like '${regionCode}%'
+            </if>
+        </where>
+        <if test="select != null">
+            <if test="select.orderBy">
+                order by ${select.orderBy}
+            </if>
+            <if test="select.limitS != null and select.limitE != null">
+                limit #{select.limitS},#{select.limitE}
+            </if>
+        </if>
+    </select>
+    <select id="selectByOperId"
+            parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.ShopEntity">
+        SELECT
+            shop.*
+        FROM
+        shop
+        INNER JOIN operator_shop ON operator_shop.shop_id = shop.shop_id
+        where operator_shop.oper_id = #{operId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from shop
+        where shop_id = #{shopId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective"
+            useGeneratedKeys="true"
+            keyProperty="shopId"
+            parameterType="com.grape.supermarket.entity.db.ShopEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into shop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="shopName != null">
+                shop_name,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="regionCode != null">
+                region_code,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="shopName != null">
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="regionCode != null">
+                #{regionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.ShopEntity">
+        <!--
+        @mbggenerated
+        -->
+        update shop
+        <set>
+            <if test="shopName != null">
+                shop_name = #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="regionCode != null">
+                region_code = #{regionCode,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where shop_id = #{shopId,jdbcType=INTEGER}
+    </update>
+    <select id="selectShopByCommId" resultType="com.grape.supermarket.entity.db.ShopEntity" parameterType="java.lang.Integer">
+        select shop_id,shop_name from shop where shop_id in (select shop_id from depot where comm_id=#{id})
+    </select>
+</mapper>

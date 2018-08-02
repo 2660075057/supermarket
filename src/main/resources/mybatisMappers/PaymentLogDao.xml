@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.PaymentLogDao">
+  <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.PaymentLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="transaction_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="log_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="payment_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="payment_data" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+      <arg column="note" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+    @mbggenerated
+    -->
+    id, transaction_type, log_code, payment_id, create_time,payment_data, note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+    @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from payment_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+    @mbggenerated
+    -->
+    delete from payment_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.PaymentLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    insert into payment_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="transactionType != null">
+        transaction_type,
+      </if>
+      <if test="logCode != null">
+        log_code,
+      </if>
+      <if test="paymentId != null">
+        payment_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="paymentData != null">
+        payment_data,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transactionType != null">
+        #{transactionType,jdbcType=TINYINT},
+      </if>
+      <if test="logCode != null">
+        #{logCode,jdbcType=INTEGER},
+      </if>
+      <if test="paymentId != null">
+        #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentData != null">
+        #{paymentData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.PaymentLogEntity">
+    <!--
+    @mbggenerated
+    -->
+    update payment_log
+    <set>
+      <if test="transactionType != null">
+        transaction_type = #{transactionType,jdbcType=TINYINT},
+      </if>
+      <if test="logCode != null">
+        log_code = #{logCode,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentId != null">
+        payment_id = #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentData != null">
+        payment_data = #{paymentData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

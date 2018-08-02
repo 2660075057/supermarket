@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.DiscountGroupDao">
+    <cache readOnly="false" size="128" eviction="LRU" flushInterval="60000"/>
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.DiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <idArg column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="delete_mark" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="oper_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        group_id, title,delete_mark, oper_id, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from discount_group
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </select>
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        UPDATE `discount_group` SET delete_mark=1 WHERE group_id = #{groupId}
+    </update>
+    <insert id="insertSelective"
+            useGeneratedKeys="true"
+            keyProperty="groupId"
+            parameterType="com.grape.supermarket.entity.db.DiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into discount_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+            <if test="operId != null">
+                oper_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=TINYINT},
+            </if>
+            <if test="operId != null">
+                #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.DiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        update discount_group
+        <set>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=TINYINT},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="operId != null">
+                oper_id = #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </update>
+    
+     <select id="selectByParam"
+            parameterType="com.grape.supermarket.entity.param.DiscountGroupParam"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from discount_group
+        <where>
+            <if test="groupId != null">
+                group_id = #{groupId}
+            </if>
+            <if test="deleteMark != null">
+                and delete_mark = #{deleteMark}
+            </if>
+            <if test="title != null">
+                and title LIKE CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+        </where>
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countByParam"
+            parameterType="com.grape.supermarket.entity.param.DiscountGroupParam"
+            resultType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        select
+        count(group_id)
+        from discount_group
+        <where>
+            <if test="groupId != null">
+                group_id = #{groupId}
+            </if>
+            <if test="deleteMark != null">
+                and delete_mark = #{deleteMark}
+            </if>
+            <if test="title != null">
+                and title LIKE CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+        </where>
+    </select>
+</mapper>

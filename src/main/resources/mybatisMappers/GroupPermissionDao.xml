@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.GroupPermissionDao">
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.GroupPermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="p_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.GroupPermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into group_permission (group_id, p_id)
+        values (#{groupId,jdbcType=INTEGER}, #{pId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.GroupPermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into group_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="pId != null">
+                p_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="pId != null">
+                #{pId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByGroupId" parameterType="java.lang.Integer">
+        delete from group_permission where group_id = #{groupId}
+    </delete>
+    
+    <select id="selectList" parameterType="com.grape.supermarket.entity.db.GroupPermissionEntity"
+            resultType="com.grape.supermarket.entity.db.GroupPermissionEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        group_id, p_id
+        from `group_permission` where group_id = #{groupId,jdbcType=INTEGER}
+    </select>
+</mapper>

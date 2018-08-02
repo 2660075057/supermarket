@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.CommodityAttrDao">
+    <resultMap id="BaseResultMap" type="com.grape.supermarket.entity.db.CommodityAttrEntity">
+        <!--
+        @mbggenerated
+        -->
+        <constructor>
+            <idArg column="comm_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <idArg column="attr_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="value" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        comm_id, attr_id, value
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityAttrKey"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity_attr
+        where comm_id = #{commId,jdbcType=INTEGER}
+        and attr_id = #{attrId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCommId" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from commodity_attr
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityAttrKey">
+        <!--
+        @mbggenerated
+        -->
+        delete from commodity_attr
+        where comm_id = #{commId,jdbcType=INTEGER}
+        and attr_id = #{attrId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByCommId" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from commodity_attr
+        where comm_id = #{commId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.grape.supermarket.entity.db.CommodityAttrEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity_attr (comm_id, attr_id, value
+        )
+        values (#{commId,jdbcType=INTEGER}, #{attrId,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.CommodityAttrEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into commodity_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="attrId != null">
+                attr_id,
+            </if>
+            <if test="value != null">
+                value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commId != null">
+                #{commId,jdbcType=INTEGER},
+            </if>
+            <if test="attrId != null">
+                #{attrId,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.CommodityAttrEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity_attr
+        <set>
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where comm_id = #{commId,jdbcType=INTEGER}
+        and attr_id = #{attrId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.grape.supermarket.entity.db.CommodityAttrEntity">
+        <!--
+        @mbggenerated
+        -->
+        update commodity_attr
+        set value = #{value,jdbcType=VARCHAR}
+        where comm_id = #{commId,jdbcType=INTEGER}
+        and attr_id = #{attrId,jdbcType=INTEGER}
+    </update>
+    <select id="selectCommAttrByCommId" resultType="com.grape.supermarket.entity.db.CommodityAttrEntity" parameterType="java.lang.Integer">
+        select ca.*,a.attr_name from commodity_attr ca,attribute a where ca.attr_id=a.attr_id and comm_id = #{commId}
+    </select>
+</mapper>

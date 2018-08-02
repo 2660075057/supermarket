@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grape.supermarket.dao.ShopDiscountGroupDao">
+    <cache eviction="LRU" flushInterval="60000" readOnly="true" size="64"/>
+    <sql id="Base_Column_List">
+        <!--
+        @mbggenerated
+        -->
+        id, shop_id, group_id, start_time, end_time, oper_id, create_time
+    </sql>
+    <select id="selectNowDiscountGroup" parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_discount_group
+        where shop_id = #{shopId} and start_time <![CDATA[ < ]]> now() and end_time <![CDATA[ > ]]> now()
+        group by start_time asc limit 0,1
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        select
+        <include refid="Base_Column_List"/>
+        from shop_discount_group
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+        @mbggenerated
+        -->
+        delete from shop_discount_group
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertSelective" parameterType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        insert into shop_discount_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="operId != null">
+                oper_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operId != null">
+                #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        <!--
+        @mbggenerated
+        -->
+        update shop_discount_group
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operId != null">
+                oper_id = #{operId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectParam" resultType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity" parameterType="com.grape.supermarket.entity.param.ShopDiscountGroupParam">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_discount_group
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="startTime != null and endTime != null">
+                and ((date(start_time) between #{startTime} and #{endTime})
+                or (date(end_time) between #{startTime} and #{endTime})
+                or (date(start_time) <![CDATA[ <= ]]> #{startTime} and date(end_time) <![CDATA[ >= ]]>  #{endTime}))
+            </if>
+        </where>
+        <include refid="common.currency_tail" />
+    </select>
+    <select id="countShopDisGroup" resultType="java.lang.Integer" parameterType="com.grape.supermarket.entity.param.ShopDiscountGroupParam">
+        select
+         COUNT(id)
+        from shop_discount_group
+        <where>
+            <if test="shopId != null">
+                shop_id = #{shopId}
+            </if>
+            <if test="idRange != null">
+                and shop_id in
+                <foreach collection="idRange" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="startTime != null and endTime != null">
+                and ((date(start_time) between #{startTime} and #{endTime})
+                or (date(end_time) between #{startTime} and #{endTime})
+                or (date(start_time) <![CDATA[ <= ]]> #{startTime} and date(end_time) <![CDATA[ >= ]]>  #{endTime}))
+            </if>
+        </where>
+    </select>
+    <select id="selectByGroupIdAndShopIdAndTime" parameterType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity" resultType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_discount_group
+        <where>
+            <if test="groupId != null">
+                group_id = #{groupId}
+            </if>
+            <if test="shopId != null">
+                and shop_id = #{shopId}
+            </if>
+            <if test="startTime != null and endTime != null">
+                and ((date(start_time) between #{startTime} and #{endTime})
+                or (date(end_time) between #{startTime} and #{endTime})
+                or (date(start_time) <![CDATA[ <= ]]> #{startTime} and date(end_time) <![CDATA[ >= ]]>  #{endTime}))
+            </if>
+            <if test="id != null">
+                and id != #{id}
+            </if>
+        </where>
+    </select>
+    <select id="selectByGroupId" parameterType="java.lang.Integer" resultType="com.grape.supermarket.entity.db.ShopDiscountGroupEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_discount_group where group_id = #{groupId,jdbcType=INTEGER} AND end_time <![CDATA[ > ]]> NOW()
+    </select>
+</mapper>
